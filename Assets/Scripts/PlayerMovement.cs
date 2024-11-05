@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerRigidbodyHandler rbHandler;
     private Rigidbody2D rb;
 
+   
+    private Animator animator;
+
     private float horizontal;
     private float vertical;
     private float moveSpeed;
@@ -26,20 +29,57 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rbHandler = GetComponent<PlayerRigidbodyHandler>();
         rbHandler.SwapGravity(rbHandler.AntiGravityOn);
+
+        animator.SetBool("isGrounded", true);
+
     }
 
     private void Update()
     {
+        if (horizontal > 0)
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (horizontal < 0)
+        {
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        }
+
         IsGrounded();
         
         if (!rbHandler.AntiGravityOn || isGrounded)
         {
+
+
             rb.velocity = new Vector3(horizontal * moveSpeed, rb.velocity.y, 0);
         }
-       
+
+        if (!isGrounded)
+        {
+            animator.SetBool("isGrounded", false);
+            animator.SetBool("isRunning", false);
+        }
+        if (isGrounded && rb.velocity.x != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else if (isGrounded && rb.velocity.x == 0)
+        {
+            animator.SetBool("isRunning", false);
+        }
+        if (isGrounded)
+        {
+            animator.SetBool("isGrounded", true);
+            animator.SetBool("isFalling", false);
+        }
+        if (!isGrounded && rb.velocity.y < 0)
+        {
+            animator.SetBool("isFalling", true);
+        }
     }
 
     public void IsGrounded()
@@ -49,10 +89,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-       
+
         horizontal = context.ReadValue<Vector2>().x;
+
         
-        if(rbHandler.AntiGravityOn && context.performed)
+        if (rbHandler.AntiGravityOn && context.performed)
         {
             vertical = context.ReadValue<Vector2>().y;
             rb.AddForce(new Vector2(horizontal * (moveSpeed / 2), vertical * (moveSpeed / 2)), ForceMode2D.Impulse);
