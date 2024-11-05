@@ -6,6 +6,7 @@ public class Gunfire : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject gunFire;
+    public GameObject bullet;
     // Update is called once per frame
     void Update()
     {
@@ -22,6 +23,6 @@ public class Gunfire : MonoBehaviour
 
     void Shoot()
     {
-
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 }

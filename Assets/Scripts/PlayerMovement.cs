@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private PlayerRigidbodyHandler rbHandler;
     private Rigidbody2D rb;
 
-   
     private Animator animator;
 
     private float horizontal;
@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public float JumpForce { get {  return jumpForce; } set {  jumpForce = value; } }
 
     private bool isGrounded;
+
+    public bool IsFacingRight { get; private set; }
 
     private void Start()
     {
@@ -43,10 +45,12 @@ public class PlayerMovement : MonoBehaviour
         if (horizontal > 0)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
+            IsFacingRight = true;
         }
         else if (horizontal < 0)
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            IsFacingRight = false;
         }
 
         IsGrounded();
