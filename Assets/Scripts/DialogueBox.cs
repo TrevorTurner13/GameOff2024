@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.Events;
 public class DialogueBox : MonoBehaviour
 {
     public DialogueSegment[] DialogueSegments;
@@ -21,6 +21,8 @@ public class DialogueBox : MonoBehaviour
     private int DialogueIndex;
     private bool CanContinue;
 
+    [Space]
+    public UnityEvent OnDialogueEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,7 @@ public class DialogueBox : MonoBehaviour
             if (DialogueIndex == DialogueSegments.Length)
             {
                 gameObject.SetActive(false);
+                OnDialogueEnd?.Invoke();
                 return;
             }
             SetStyle(DialogueSegments[DialogueIndex].Speaker);
