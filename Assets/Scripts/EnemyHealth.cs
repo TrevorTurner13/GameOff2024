@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    EnemyPatrol enemyPatrol;
+
     public float health = 100f;  // Health of the object
 
     public Animator animator;
 
+    private void Start()
+    {
+        enemyPatrol = GetComponent<EnemyPatrol>();
+    }
     // Method to apply damage to this object
     public void TakeDamage(float damage)
     {
@@ -16,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
         // Check if health is below zero and destroy the object if it's dead
         if (health <= 0f)
         {
+            enemyPatrol.isDead = true;
             animator.SetBool("IsDead", true);
             Die();
         }
