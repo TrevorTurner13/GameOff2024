@@ -1,28 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Gunfire : MonoBehaviour
 {
+    public Animator animator;
+
     public Transform firePoint;
-    public GameObject gunFire;
+ 
     public GameObject bullet;
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-            gunFire.SetActive(true);
-        }
-        else
-        {
-            gunFire.SetActive(false);
-        }
+
     }
 
-    void Shoot()
+    public void Shoot(InputAction.CallbackContext context)
     {
-        Instantiate(bullet, firePoint.position, firePoint.rotation);
+        if (context.performed)
+        {
+            animator.SetTrigger("IsShooting");
+
+            Instantiate(bullet, firePoint.position, firePoint.rotation);
+        }
     }
 }

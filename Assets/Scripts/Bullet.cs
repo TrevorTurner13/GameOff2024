@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float damage = 10f;
     public float speed = 20f;
     public Rigidbody2D rb;
 
@@ -23,4 +24,30 @@ public class Bullet : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        StartCoroutine(DestroyBullet());
+    }
+
+    IEnumerator DestroyBullet()
+    {
+
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the collision object has a Health component
+        EnemyHealth targetHealth = collision.gameObject.GetComponent<EnemyHealth>();
+
+        if (targetHealth != null)
+        {
+            // Deal damage to the object
+            targetHealth.TakeDamage(damage);
+        }
+
+        Destroy(gameObject);
+    }
 }
