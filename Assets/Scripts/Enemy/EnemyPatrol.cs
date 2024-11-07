@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
+    public AIChase aiChase;
     public GameObject pointA;
     public GameObject pointB;
 
@@ -38,8 +39,10 @@ public class EnemyPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        if (!isDead && !aiChase.isChasing)
         {
+            animator.SetBool("IsAttacking", false);
+
             Vector2 point = currentPoint.position - transform.position;
 
             if (currentPoint == pointB.transform && !isIdle)
@@ -53,12 +56,12 @@ public class EnemyPatrol : MonoBehaviour
 
             if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
             {
-                StartCoroutine(WaitIdle());
+                    StartCoroutine(WaitIdle());
+
             }
             if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
             {
-                StartCoroutine(WaitIdle());
-
+                    StartCoroutine(WaitIdle());
             }
         }
 
@@ -66,28 +69,34 @@ public class EnemyPatrol : MonoBehaviour
 
     IEnumerator WaitIdle()
     {
+  
+
         animator.SetBool("IsRunning", false);
 
-        rb.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
 
-        isIdle = true;
+            isIdle = true;
+            
 
-        yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
 
-        flip();
+            flip();
+            
 
-        if (currentPoint == pointA.transform)
-        {
-            currentPoint = pointB.transform;
-        }
-        else
-        {
-            currentPoint = pointA.transform;
-        }
+            if (currentPoint == pointA.transform)
+            {
+                currentPoint = pointB.transform;
+            }
+            else
+            {
+                currentPoint = pointA.transform;
+            }
 
-        animator.SetBool("IsRunning", true);
+            animator.SetBool("IsRunning", true);
 
-        isIdle = false;
+            isIdle = false;
+
+
 
     }
 }
