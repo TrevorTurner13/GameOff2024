@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
+    public EnemyController enemyController;
+
     public AIChase aiChase;
     public GameObject pointA;
     public GameObject pointB;
@@ -19,7 +21,7 @@ public class EnemyPatrol : MonoBehaviour
 
     public bool isIdle;
     public bool isDead;
-
+    public bool isFacingRight;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,7 @@ public class EnemyPatrol : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+        isFacingRight = !isFacingRight;
     }
 
     // Update is called once per frame
@@ -41,30 +44,17 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (!isDead && !aiChase.isChasing)
         {
-            animator.SetBool("IsAttacking", false);
-
-            Vector2 point = currentPoint.position - transform.position;
-
-            if (currentPoint == pointB.transform && !isIdle)
-            {
-                rb.velocity = new Vector2(speed, 0);
-            }
-            else if (currentPoint == pointA.transform && !isIdle)
-            {
-                rb.velocity = new Vector2(-speed, 0);
-            }
-
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
-            {
-                    StartCoroutine(WaitIdle());
-
-            }
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
-            {
-                    StartCoroutine(WaitIdle());
-            }
+            //animator.SetBool("IsAttacking", false);
+            Patrol();
         }
-
+        if (rb.velocity.x > 0 && !isFacingRight)
+        {
+            flip();
+        }
+        else if (rb.velocity.x < 0 && isFacingRight)
+        {
+            flip();
+        }
     }
 
     IEnumerator WaitIdle()
@@ -80,7 +70,6 @@ public class EnemyPatrol : MonoBehaviour
 
             yield return new WaitForSeconds(1);
 
-            flip();
             
 
             if (currentPoint == pointA.transform)
@@ -98,5 +87,31 @@ public class EnemyPatrol : MonoBehaviour
 
 
 
+    }
+
+    public void Patrol()
+    {
+        enemyController.currentState = EnemyController.aiStates.Patrol;
+
+        Vector2 point = currentPoint.position - transform.position;
+
+        if (currentPoint == pointB.transform && !isIdle)
+        {
+            rb.velocity = new Vector2(speed, 0);
+        }
+        else if (currentPoint == pointA.transform && !isIdle)
+        {
+            rb.velocity = new Vector2(-speed, 0);
+        }
+
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
+        {
+            StartCoroutine(WaitIdle());
+
+        }
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
+        {
+            StartCoroutine(WaitIdle());
+        }
     }
 }

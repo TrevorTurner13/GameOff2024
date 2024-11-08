@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AIChase : MonoBehaviour
 {
+    public EnemyController enemyController;
+
     public EnemyDamage enemyDamage;
 
     public GameObject player;
@@ -25,36 +27,46 @@ public class AIChase : MonoBehaviour
     {
         distance = Vector2.Distance(transform.position, player.transform.position);
 
+
+
+        if (distance < distanceBetween)
+        {
+            isChasing = true;
+            Chase();
+            enemyController.currentState = EnemyController.aiStates.Chasing;
+
+        }
+        if (distance > distanceBetween)
+        {
+            isChasing = false;
+            enemyController.currentState = EnemyController.aiStates.Patrol;
+
+
+        }
+        if (enemyDamage.isAttacking)
+        {
+
+            isChasing = false;
+            enemyController.currentState = EnemyController.aiStates.Attacking;
+
+        }
+    }
+
+    public void Chase()
+    {
         if (isChasing && !enemyDamage.isAttacking)
         {
-            enemyDamage.isAttacking = false;
-
             if (transform.position.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(1, 1, 1);
                 transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
             }
             if (transform.position.x < player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(-1, 1, 1);
                 transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
             }
 
         }
-        else
-        {
-            if (distance < distanceBetween)
-            {
-                isChasing = true;
-            }
-            if (distance > distanceBetween)
-            {
-                isChasing = false;
-
-            }
-
-        }
-
-
     }
 }
