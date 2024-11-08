@@ -10,6 +10,9 @@ public class Gunfire : MonoBehaviour
     public Transform firePoint;
  
     public GameObject bullet;
+
+    [SerializeField] private AudioClip gunfireSFX;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +23,8 @@ public class Gunfire : MonoBehaviour
     {
         if (context.performed)
         {
+            SFXManager.instance.PlaySFXClip(gunfireSFX, transform, 1f);
+
             animator.SetTrigger("IsShooting");
 
             Instantiate(bullet, firePoint.position, firePoint.rotation);

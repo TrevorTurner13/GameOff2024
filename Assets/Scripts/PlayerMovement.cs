@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float maxHorizontalVelocity;
     [SerializeField] private float maxVerticalVelocity;
+    [SerializeField] private AudioClip[] jumpSFX;
 
     private PlayerRigidbodyHandler rbHandler;
     private Rigidbody2D rb;
@@ -110,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded && context.performed) 
         {
+            SFXManager.instance.PlayRandomSFXClip(jumpSFX, transform, 1f);
+
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
         

@@ -38,6 +38,7 @@ public class EnemyDamage : MonoBehaviour
             animator.SetBool("IsAttacking", true);
 
             isAttacking = true;
+
             //player take damage
 
             //playerHealth.TakeDamage();
