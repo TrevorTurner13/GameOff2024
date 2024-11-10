@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         if (rbHandler.AntiGravityOn && context.performed)
         {
             vertical = context.ReadValue<Vector2>().y;
-            rb.AddForce(new Vector2(horizontal * (moveSpeed / 2), vertical * (moveSpeed / 2)), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(horizontal * (moveSpeed / 3), vertical * (moveSpeed / 2)), ForceMode2D.Impulse);
             rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxHorizontalVelocity, maxHorizontalVelocity),
                                       Mathf.Clamp(rb.velocity.y, -maxVerticalVelocity, maxVerticalVelocity));
         }
