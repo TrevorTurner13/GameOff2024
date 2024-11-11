@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c9e4661a7903dfc458df917aaf02d4da
   - enabled: 1
-    path: Assets/Scenes/BradTestScene.unity
+    path: Assets/Scenes/IntroScene.unity
     guid: 05473d2fb9d002647bb6b7cde82057ef
   - enabled: 1
     path: Assets/Scenes/Trevor test Scene.unity
