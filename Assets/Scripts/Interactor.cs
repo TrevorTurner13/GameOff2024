@@ -30,7 +30,7 @@ public class Interactor : MonoBehaviour
         if (collision.TryGetComponent(out IInteractable interactOBJ))
         {
             interactableInRange = interactOBJ;
-            Debug.Log("Interactable object in range.");
+            //Debug.Log("Interactable object in range.");
         }
     }
 
@@ -40,7 +40,7 @@ public class Interactor : MonoBehaviour
         if (collision.TryGetComponent(out IInteractable interactOBJ) && interactOBJ == interactableInRange)
         {
             interactableInRange = null;
-            Debug.Log("Interactable object out of range.");
+            // Debug.Log("Interactable object out of range.");
         }
     }
 }
