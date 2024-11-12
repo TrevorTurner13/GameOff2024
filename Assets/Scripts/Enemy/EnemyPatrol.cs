@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    public EnemyController enemyController;
+    [SerializeField] private AudioClip[] growlSFX;
+    [SerializeField] private float growlCooldown;
 
-    public AIChase aiChase;
+    public EnemyController enemyController;
+    public EnemyDamage enemyDamage;
+
+    //public AIChase aiChase;
     public GameObject pointA;
     public GameObject pointB;
 
@@ -22,6 +26,9 @@ public class EnemyPatrol : MonoBehaviour
     public bool isIdle;
     public bool isDead;
     public bool isFacingRight;
+
+    private float growlSFXCooldownTimer = Mathf.Infinity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +49,23 @@ public class EnemyPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead && !aiChase.isChasing)
+        growlSFXCooldownTimer += Time.deltaTime;
+
+        if (!enemyDamage.isAttacking)
         {
-            //animator.SetBool("IsAttacking", false);
-            Patrol();
+            if (growlSFXCooldownTimer >= growlCooldown)
+            {
+                growlSFXCooldownTimer = 0;
+                SFXManager.instance.PlayRandomSFXClip(growlSFX, transform, 0.1f);
+
+            }
+        }
+
+
+        if (!isDead && !enemyDamage.isAttacking/* && !aiChase.isChasing*/)
+        {
+
+            enemyController.currentState = EnemyController.aiStates.Patrol;
         }
         if (rb.velocity.x > 0 && !isFacingRight)
         {
@@ -68,7 +88,7 @@ public class EnemyPatrol : MonoBehaviour
             isIdle = true;
             
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
             
 
@@ -91,27 +111,40 @@ public class EnemyPatrol : MonoBehaviour
 
     public void Patrol()
     {
-        enemyController.currentState = EnemyController.aiStates.Patrol;
+        if (!isIdle)
+        {
+            animator.SetBool("IsRunning", true);
+        }
+
+
 
         Vector2 point = currentPoint.position - transform.position;
 
-        if (currentPoint == pointB.transform && !isIdle)
-        {
-            rb.velocity = new Vector2(speed, 0);
-        }
-        else if (currentPoint == pointA.transform && !isIdle)
-        {
-            rb.velocity = new Vector2(-speed, 0);
-        }
+            if (currentPoint == pointB.transform && !isIdle)
+            {
+                rb.velocity = new Vector2(speed, 0);
+            }
+            else if (currentPoint == pointA.transform && !isIdle)
+            {
+                rb.velocity = new Vector2(-speed, 0);
+            }
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
-        {
-            StartCoroutine(WaitIdle());
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
+            {
+                StartCoroutine(WaitIdle());
 
-        }
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
-        {
-            StartCoroutine(WaitIdle());
-        }
+            }
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
+            {
+                StartCoroutine(WaitIdle());
+            }
+
+
+    }
+
+    private void OnDisable()
+    {
+        animator.SetBool("IsRunning", false);
+
     }
 }

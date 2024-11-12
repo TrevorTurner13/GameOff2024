@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045037672264143359}
   - component: {fileID: 5102662439612667085}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6362781387138572353}
   - component: {fileID: 5140637400503554204}
   - component: {fileID: 8212826161379125559}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gunfire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4140330299904434855}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050775761094352384}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 2418687701878520787}
   - component: {fileID: 7485682972859838663}
   - component: {fileID: 7208946776604286999}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 1849780290236978405}
   - component: {fileID: 2232050108586062157}
   - component: {fileID: 3972732544654671374}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
