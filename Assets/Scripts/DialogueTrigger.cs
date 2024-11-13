@@ -8,6 +8,8 @@ public class DialogueTrigger : MonoBehaviour
     private GameObject dialoguePrefab; //To be set in inspector
     private bool dialogueTriggered = false;
 
+    public Animator animator;
+    public bool isTransmitting;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,11 @@ public class DialogueTrigger : MonoBehaviour
             {
                 dialogueTriggered = true;
                 dialoguePrefab.SetActive(true);
+                if (animator != null)
+                {
+                    animator.SetBool("isTransmitting", true);
+                }
+                isTransmitting = true;
             }
         }
     }

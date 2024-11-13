@@ -26,6 +26,8 @@ public class EnemyDamage : MonoBehaviour
 
     public EnemyController enemyController;
 
+    public PlayerHealth playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,7 +103,7 @@ public class EnemyDamage : MonoBehaviour
 
         //player take damage
 
-        //playerHealth.TakeDamage();
+        playerHealth.TakeDamage();
     }
 
     private bool PlayerInRange()
