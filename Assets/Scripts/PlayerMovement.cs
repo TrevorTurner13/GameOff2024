@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    public PlayerHealth playerHealth;
+
+    public DialogueTrigger dialogueTrigger;
+
     private float horizontal;
     private float vertical;
     private float moveSpeed;
@@ -43,48 +47,52 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (horizontal > 0)
+        if (!playerHealth.isDead && !dialogueTrigger.isTransmitting)
         {
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
-            IsFacingRight = true;
-        }
-        else if (horizontal < 0)
-        {
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            IsFacingRight = false;
+            if (horizontal > 0)
+            {
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+                IsFacingRight = true;
+            }
+            else if (horizontal < 0)
+            {
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                IsFacingRight = false;
+            }
+
+            IsGrounded();
+
+            if (!rbHandler.AntiGravityOn || isGrounded)
+            {
+
+
+                rb.velocity = new Vector3(horizontal * moveSpeed, rb.velocity.y, 0);
+            }
+
+            if (!isGrounded)
+            {
+                animator.SetBool("isGrounded", false);
+                animator.SetBool("isRunning", false);
+            }
+            if (isGrounded && rb.velocity.x != 0)
+            {
+                animator.SetBool("isRunning", true);
+            }
+            else if (isGrounded && rb.velocity.x == 0)
+            {
+                animator.SetBool("isRunning", false);
+            }
+            if (isGrounded)
+            {
+                animator.SetBool("isGrounded", true);
+                animator.SetBool("isFalling", false);
+            }
+            if (!isGrounded && rb.velocity.y < 0)
+            {
+                animator.SetBool("isFalling", true);
+            }
         }
 
-        IsGrounded();
-        
-        if (!rbHandler.AntiGravityOn || isGrounded)
-        {
-
-
-            rb.velocity = new Vector3(horizontal * moveSpeed, rb.velocity.y, 0);
-        }
-
-        if (!isGrounded)
-        {
-            animator.SetBool("isGrounded", false);
-            animator.SetBool("isRunning", false);
-        }
-        if (isGrounded && rb.velocity.x != 0)
-        {
-            animator.SetBool("isRunning", true);
-        }
-        else if (isGrounded && rb.velocity.x == 0)
-        {
-            animator.SetBool("isRunning", false);
-        }
-        if (isGrounded)
-        {
-            animator.SetBool("isGrounded", true);
-            animator.SetBool("isFalling", false);
-        }
-        if (!isGrounded && rb.velocity.y < 0)
-        {
-            animator.SetBool("isFalling", true);
-        }
     }
 
     public void IsGrounded()
@@ -97,24 +105,30 @@ public class PlayerMovement : MonoBehaviour
 
         horizontal = context.ReadValue<Vector2>().x;
 
-        
-        if (rbHandler.AntiGravityOn && context.performed)
+        if (!playerHealth.isDead && !dialogueTrigger.isTransmitting)
         {
-            vertical = context.ReadValue<Vector2>().y;
-            rb.AddForce(new Vector2(horizontal * (moveSpeed / 2), vertical * (moveSpeed / 2)), ForceMode2D.Impulse);
-            rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxHorizontalVelocity, maxHorizontalVelocity),
-                                      Mathf.Clamp(rb.velocity.y, -maxVerticalVelocity, maxVerticalVelocity));
+            if (rbHandler.AntiGravityOn && context.performed)
+            {
+                vertical = context.ReadValue<Vector2>().y;
+                rb.AddForce(new Vector2(horizontal * (moveSpeed / 3), vertical * (moveSpeed / 2)), ForceMode2D.Impulse);
+                rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -maxHorizontalVelocity, maxHorizontalVelocity),
+                                          Mathf.Clamp(rb.velocity.y, -maxVerticalVelocity, maxVerticalVelocity));
+            }
         }
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded && context.performed) 
+        if (!playerHealth.isDead && !dialogueTrigger.isTransmitting)
         {
-            SFXManager.instance.PlayRandomSFXClip(jumpSFX, transform, 1f);
+            if (isGrounded && context.performed)
+            {
+                SFXManager.instance.PlayRandomSFXClip(jumpSFX, transform, 1f);
 
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            }
         }
+
         
     }
 

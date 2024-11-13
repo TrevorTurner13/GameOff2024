@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     public EnemyPatrol enemyPatrol;
     public EnemyDamage enemyDamage;
     public EnemyHealth enemyHealth;
-    public AIChase aiChase;
+    //public AIChase aiChase;
 
 
     public enum aiStates
@@ -36,11 +36,12 @@ public class EnemyController : MonoBehaviour
                 break;
 
             case aiStates.Attacking:
+                //enemyDamage.Attack();
 
                 break;
 
             case aiStates.Chasing:
-                aiChase.Chase();
+                //aiChase.Chase();
                 break;
 
             case aiStates.Death:

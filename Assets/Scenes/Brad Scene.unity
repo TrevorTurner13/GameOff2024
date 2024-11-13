@@ -250,17 +250,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &660952766 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1273436687903354973, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-  m_PrefabInstance: {fileID: 1111053014}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9535bb24ad675e648a8a2b971ff52b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &678948561
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,11 +332,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!95 &724943850 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3972732544654671374, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
-  m_PrefabInstance: {fileID: 4610240052588326416}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &769911050
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +659,6 @@ GameObject:
   - component: {fileID: 1029605156}
   - component: {fileID: 1029605158}
   - component: {fileID: 1029605157}
-  - component: {fileID: 1029605159}
   m_Layer: 0
   m_Name: AlienSprite
   m_TagString: Untagged
@@ -771,101 +754,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1029605159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1029605155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b2ca79c5f9c00e46a26d514183205ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyController: {fileID: 1844990505}
-  animator: {fileID: 1029605157}
---- !u!1001 &1111053014
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1273436687903354973, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 724943850}
-    - target: {fileID: 1723303316483405190, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 724943850}
-    - target: {fileID: 1723303316483405190, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: dialogueTrigger
-      value: 
-      objectReference: {fileID: 660952766}
-    - target: {fileID: 1723303316483405190, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: DialogueSegments.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1723303316483405190, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: DialogueSegments.Array.data[0].Speaker
-      value: 
-      objectReference: {fileID: 11400000, guid: 8fd0b5b9d8e8e7143b751189dc6cecec, type: 2}
-    - target: {fileID: 1723303316483405190, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: DialogueSegments.Array.data[0].Dialogue
-      value: Hello bitch
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.894033
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.743481
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6494057731275213601, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708893702252824911, guid: ccb5fce47a4021045b218202a3846550, type: 3}
-      propertyPath: m_Name
-      value: DialogueTrigger
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ccb5fce47a4021045b218202a3846550, type: 3}
 --- !u!1 &1125765017
 GameObject:
   m_ObjectHideFlags: 0
@@ -6217,16 +6105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6386750ca183c545b083a7bc00fbeb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growlSFX:
-  - {fileID: 8300000, guid: d5227a14ad3c8a14f84ccac0f8310814, type: 3}
-  - {fileID: 8300000, guid: fa5e88da70fb928408f1b8ad2fe58232, type: 3}
-  growlCooldown: 30
   enemyController: {fileID: 1844990505}
-  enemyDamage: {fileID: 1844990504}
+  aiChase: {fileID: 1844990502}
   pointA: {fileID: 1125765017}
   pointB: {fileID: 1981040855}
   animator: {fileID: 1029605157}
-  speed: 3
+  speed: 2
   isIdle: 0
   isDead: 0
   isFacingRight: 0
@@ -6237,7 +6121,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844990496}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4f450dfb1f1134fac11c08ee0599e5, type: 3}
   m_Name: 
@@ -6280,7 +6164,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.013994694, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6291,7 +6175,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.7152262, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1844990504
 MonoBehaviour:
@@ -6305,21 +6189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b66c80e8f57e640809a327ca558a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 2
-  range: 0.52
-  colliderDistance: -1.1
   damage: 0
-  boxCollider: {fileID: 1844990503}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  enemyPatrol: {fileID: 1844990501}
-  enemyAttackSFX: {fileID: 8300000, guid: 97ef30e8193490e4b91ec0809475b5fe, type: 3}
   animator: {fileID: 1029605157}
   rb: {fileID: 1844990499}
   isAttacking: 0
   enemyController: {fileID: 1844990505}
-  playerHealth: {fileID: 2130186735}
 --- !u!114 &1844990505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6335,6 +6209,7 @@ MonoBehaviour:
   enemyPatrol: {fileID: 1844990501}
   enemyDamage: {fileID: 1844990504}
   enemyHealth: {fileID: 1844990500}
+  aiChase: {fileID: 1844990502}
   currentState: 0
 --- !u!114 &1910320375 stripped
 MonoBehaviour:
@@ -7933,12 +7808,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2130186728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb08e1f921d58144db675cc033529428, type: 3}
+  m_Script: {fileID: 11500000, guid: 10c3ad9d61935484780ed6eba8090ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 30
-  animator: {fileID: 724943850}
-  isDead: 0
+  InteractorSource: {fileID: 2130186734}
 --- !u!1001 &2419453665340148244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8008,14 +7881,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 261915726790625216, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
-      propertyPath: playerHealth
-      value: 
-      objectReference: {fileID: 2130186735}
-    - target: {fileID: 261915726790625216, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
-      propertyPath: dialogueTrigger
-      value: 
-      objectReference: {fileID: 660952766}
     - target: {fileID: 3792650375463056710, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8311,4 +8176,3 @@ SceneRoots:
   - {fileID: 5868208320120078178}
   - {fileID: 5378366082906170695}
   - {fileID: 970423309}
-  - {fileID: 1111053014}

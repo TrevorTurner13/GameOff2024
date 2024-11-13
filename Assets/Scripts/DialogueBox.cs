@@ -6,6 +6,9 @@ using TMPro;
 using UnityEngine.Events;
 public class DialogueBox : MonoBehaviour
 {
+    public DialogueTrigger dialogueTrigger;
+    public Animator animator;
+
     public DialogueSegment[] DialogueSegments;
     [Space]
     public Image SpeakerFaceDisplay;
@@ -40,6 +43,11 @@ public class DialogueBox : MonoBehaviour
             DialogueIndex++;
             if (DialogueIndex == DialogueSegments.Length)
             {
+                dialogueTrigger.isTransmitting = false;
+                if (animator != null)
+                {
+                    animator.SetBool("isTransmitting", false);
+                }
                 gameObject.SetActive(false);
                 OnDialogueEnd?.Invoke();
                 return;
