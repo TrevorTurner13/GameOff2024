@@ -5,8 +5,8 @@ using UnityEngine;
 public class ResetAttack : MonoBehaviour
 {
     private EnemyDamage enemyDamage;
-    public EnemyController enemyController;
-    public Animator animator;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +24,7 @@ public class ResetAttack : MonoBehaviour
 
     public void ResetEnemyAttack()
     {
-        animator.SetBool("IsRunning", false);
-
         enemyDamage.ResetAttack();
-        enemyController.currentState = EnemyController.aiStates.Patrol;
 
     }
 }

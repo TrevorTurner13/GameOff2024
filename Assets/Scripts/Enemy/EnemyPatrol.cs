@@ -10,6 +10,7 @@ public class EnemyPatrol : MonoBehaviour
 
     public EnemyController enemyController;
     public EnemyDamage enemyDamage;
+    public EnemyHealth enemyHealth;
 
     //public AIChase aiChase;
     public GameObject pointA;
@@ -24,7 +25,7 @@ public class EnemyPatrol : MonoBehaviour
     public float speed;
 
     public bool isIdle;
-    public bool isDead;
+    //public bool isDead;
     public bool isFacingRight;
 
     private float growlSFXCooldownTimer = Mathf.Infinity;
@@ -51,7 +52,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         growlSFXCooldownTimer += Time.deltaTime;
 
-        if (!enemyDamage.isAttacking)
+        if (!enemyDamage.isAttacking && !enemyHealth.isDead)
         {
             if (growlSFXCooldownTimer >= growlCooldown)
             {
@@ -62,11 +63,12 @@ public class EnemyPatrol : MonoBehaviour
         }
 
 
-        if (!isDead && !enemyDamage.isAttacking/* && !aiChase.isChasing*/)
+        if (!enemyHealth.isDead && !enemyDamage.isAttacking/* && !aiChase.isChasing*/)
         {
 
             enemyController.currentState = EnemyController.aiStates.Patrol;
         }
+
         if (rb.velocity.x > 0 && !isFacingRight)
         {
             flip();
@@ -111,33 +113,40 @@ public class EnemyPatrol : MonoBehaviour
 
     public void Patrol()
     {
-        if (!isIdle)
+        if (!enemyHealth.isDead && !enemyDamage.isAttacking)
         {
-            animator.SetBool("IsRunning", true);
+            if (!isIdle)
+            {
+                animator.SetBool("IsRunning", true);
+
+
+                Vector2 point = currentPoint.position - transform.position;
+
+                if (currentPoint == pointB.transform)
+                {
+                    rb.velocity = new Vector2(speed, 0);
+                }
+                else if (currentPoint == pointA.transform)
+                {
+                    rb.velocity = new Vector2(-speed, 0);
+                }
+
+                if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+                {
+                    StartCoroutine(WaitIdle());
+
+                }
+                if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+                {
+                    StartCoroutine(WaitIdle());
+                }
+            }
+        
+
+
+
+
         }
-
-
-
-        Vector2 point = currentPoint.position - transform.position;
-
-            if (currentPoint == pointB.transform && !isIdle)
-            {
-                rb.velocity = new Vector2(speed, 0);
-            }
-            else if (currentPoint == pointA.transform && !isIdle)
-            {
-                rb.velocity = new Vector2(-speed, 0);
-            }
-
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform && !isIdle)
-            {
-                StartCoroutine(WaitIdle());
-
-            }
-            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform && !isIdle)
-            {
-                StartCoroutine(WaitIdle());
-            }
 
 
     }

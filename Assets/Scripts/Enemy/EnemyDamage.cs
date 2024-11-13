@@ -28,6 +28,8 @@ public class EnemyDamage : MonoBehaviour
 
     public PlayerHealth playerHealth;
 
+    public EnemyHealth enemyHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,22 +43,23 @@ public class EnemyDamage : MonoBehaviour
 
         if (PlayerInRange())
         {
-            if (cooldownTimer >= attackCooldown)
+            if (!enemyHealth.isDead)
             {
-                cooldownTimer = 0;
-                enemyController.currentState = EnemyController.aiStates.Attacking;
-                SFXManager.instance.PlaySFXClip(enemyAttackSFX, transform, 0.1f);
+                if (cooldownTimer >= attackCooldown)
+                {
+                    cooldownTimer = 0;
+                    enemyController.currentState = EnemyController.aiStates.Attacking;
+                    SFXManager.instance.PlaySFXClip(enemyAttackSFX, transform, 0.1f);
 
-                Attack();
+                    Attack();
+                }
             }
         }
-        else
-        {
-            isAttacking = false;
-            enemyController.currentState = EnemyController.aiStates.Patrol;
+        //else
+        //{
+        //    enemyController.currentState = EnemyController.aiStates.Patrol;
 
-
-        }
+        //}
 
         if (enemyPatrol != null)
         {
@@ -93,17 +96,17 @@ public class EnemyDamage : MonoBehaviour
 
     public void Attack()
     {
-        rb.velocity = Vector2.zero;
 
-        animator.SetBool("IsRunning", false);
+            rb.velocity = Vector2.zero;
 
-        animator.SetTrigger("IsAttacking");
+            animator.SetBool("IsRunning", false);
 
-        isAttacking = true;
+            animator.SetTrigger("IsAttacking");
 
-        //player take damage
+            isAttacking = true;
 
-        playerHealth.TakeDamage();
+        
+
     }
 
     private bool PlayerInRange()
@@ -128,5 +131,6 @@ public class EnemyDamage : MonoBehaviour
     public void ResetAttack()
     {
         isAttacking = false;
+        Debug.Log("Reset attack");
     }
 }

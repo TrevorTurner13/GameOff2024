@@ -695,7 +695,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1093511057}
   m_Father: {fileID: 1844990497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1029605157
@@ -783,8 +784,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2ca79c5f9c00e46a26d514183205ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyController: {fileID: 1844990505}
-  animator: {fileID: 1029605157}
+--- !u!1 &1093511056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1093511057}
+  - component: {fileID: 1093511058}
+  - component: {fileID: 1093511059}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1093511057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093511056}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1029605156}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1093511058
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093511056}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.6312773, y: -0.14548993}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.28981256, y: 0.32433605}
+  m_EdgeRadius: 0
+--- !u!114 &1093511059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093511056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a28400fc52a838479452c9ac6435702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1111053014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6176,7 +6265,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -6205,6 +6294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   animator: {fileID: 1029605157}
+  enemyController: {fileID: 1844990505}
+  isDead: 0
 --- !u!114 &1844990501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6223,12 +6314,12 @@ MonoBehaviour:
   growlCooldown: 30
   enemyController: {fileID: 1844990505}
   enemyDamage: {fileID: 1844990504}
+  enemyHealth: {fileID: 1844990500}
   pointA: {fileID: 1125765017}
   pointB: {fileID: 1981040855}
   animator: {fileID: 1029605157}
-  speed: 3
+  speed: 2
   isIdle: 0
-  isDead: 0
   isFacingRight: 0
 --- !u!114 &1844990502
 MonoBehaviour:
@@ -6280,7 +6371,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.15481126}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6291,7 +6382,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.6903775}
   m_EdgeRadius: 0
 --- !u!114 &1844990504
 MonoBehaviour:
@@ -6306,8 +6397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldown: 2
-  range: 0.52
-  colliderDistance: -1.1
+  range: 0.6
+  colliderDistance: -0.96
   damage: 0
   boxCollider: {fileID: 1844990503}
   playerLayer:
@@ -6320,6 +6411,7 @@ MonoBehaviour:
   isAttacking: 0
   enemyController: {fileID: 1844990505}
   playerHealth: {fileID: 2130186735}
+  enemyHealth: {fileID: 1844990500}
 --- !u!114 &1844990505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8060,6 +8152,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7208946776604286999, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
+      propertyPath: dialogueTrigger
+      value: 
+      objectReference: {fileID: 660952766}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    EnemyPatrol enemyPatrol;
+    //EnemyPatrol enemyPatrol;
 
     public float health = 100f;  // Health of the object
 
     public Animator animator;
 
+    public EnemyController enemyController;
+
+    public bool isDead;
+
     private void Start()
     {
-        enemyPatrol = GetComponent<EnemyPatrol>();
+        //enemyPatrol = GetComponent<EnemyPatrol>();
     }
     // Method to apply damage to this object
     public void TakeDamage(float damage)
@@ -22,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
         // Check if health is below zero and destroy the object if it's dead
         if (health <= 0f)
         {
-            enemyPatrol.isDead = true;
+            //enemyPatrol.isDead = true;
             animator.SetBool("IsDead", true);
             Die();
         }
@@ -30,7 +34,9 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
+        enemyController.currentState = EnemyController.aiStates.Death;
         StartCoroutine(WaitForAnimation());
+        isDead = true;
     }
 
     IEnumerator WaitForAnimation()
