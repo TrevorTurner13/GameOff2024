@@ -849,7 +849,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6312773, y: -0.14548993}
+  m_Offset: {x: -0.7240006, y: -0.17055023}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -860,7 +860,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.28981256, y: 0.32433605}
+  m_Size: {x: 0.47525907, y: 0.37445664}
   m_EdgeRadius: 0
 --- !u!114 &1093511059
 MonoBehaviour:
@@ -949,6 +949,10 @@ PrefabInstance:
     - target: {fileID: 8708893702252824911, guid: ccb5fce47a4021045b218202a3846550, type: 3}
       propertyPath: m_Name
       value: DialogueTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708893702252824911, guid: ccb5fce47a4021045b218202a3846550, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6276,7 +6280,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -6294,7 +6298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   animator: {fileID: 1029605157}
-  enemyController: {fileID: 1844990505}
+  enemyController: {fileID: 0}
   isDead: 0
 --- !u!114 &1844990501
 MonoBehaviour:
@@ -6312,15 +6316,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d5227a14ad3c8a14f84ccac0f8310814, type: 3}
   - {fileID: 8300000, guid: fa5e88da70fb928408f1b8ad2fe58232, type: 3}
   growlCooldown: 30
-  enemyController: {fileID: 1844990505}
-  enemyDamage: {fileID: 1844990504}
-  enemyHealth: {fileID: 1844990500}
   pointA: {fileID: 1125765017}
   pointB: {fileID: 1981040855}
+  rb: {fileID: 0}
   animator: {fileID: 1029605157}
   speed: 2
-  isIdle: 0
-  isFacingRight: 0
+  IsFacingRight: 0
 --- !u!114 &1844990502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6328,17 +6329,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844990496}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4f450dfb1f1134fac11c08ee0599e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 60
+  rayDistance: 2
   enemyController: {fileID: 1844990505}
-  enemyDamage: {fileID: 1844990504}
   player: {fileID: 2130186728}
-  chaseSpeed: 2
-  distanceBetween: 3
-  isChasing: 0
+  chaseSpeed: 3
+  chaseDistance: 5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!61 &1844990503
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6371,7 +6375,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.15481126}
+  m_Offset: {x: 0.011388063, y: -0.15481126}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6382,7 +6386,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.6903775}
+  m_Size: {x: 0.9681134, y: 0.6903775}
   m_EdgeRadius: 0
 --- !u!114 &1844990504
 MonoBehaviour:
@@ -6406,12 +6410,7 @@ MonoBehaviour:
     m_Bits: 128
   enemyPatrol: {fileID: 1844990501}
   enemyAttackSFX: {fileID: 8300000, guid: 97ef30e8193490e4b91ec0809475b5fe, type: 3}
-  animator: {fileID: 1029605157}
-  rb: {fileID: 1844990499}
   isAttacking: 0
-  enemyController: {fileID: 1844990505}
-  playerHealth: {fileID: 2130186735}
-  enemyHealth: {fileID: 1844990500}
 --- !u!114 &1844990505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6424,9 +6423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f05a2b1589508ce468b20bbfa1372503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPatrol: {fileID: 1844990501}
-  enemyDamage: {fileID: 1844990504}
-  enemyHealth: {fileID: 1844990500}
   currentState: 0
 --- !u!114 &1910320375 stripped
 MonoBehaviour:
@@ -8049,11 +8045,11 @@ PrefabInstance:
       objectReference: {fileID: 2130186734}
     - target: {fileID: 2354065226962924210, guid: 2feae72fdf24f5243bafa75c6baaa331, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.17
       objectReference: {fileID: 0}
     - target: {fileID: 2354065226962924210, guid: 2feae72fdf24f5243bafa75c6baaa331, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.13
       objectReference: {fileID: 0}
     - target: {fileID: 2354065226962924210, guid: 2feae72fdf24f5243bafa75c6baaa331, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8087,6 +8083,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4957625101404311052, guid: 2feae72fdf24f5243bafa75c6baaa331, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4957625101404311052, guid: 2feae72fdf24f5243bafa75c6baaa331, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8108,13 +8112,17 @@ PrefabInstance:
       propertyPath: dialogueTrigger
       value: 
       objectReference: {fileID: 660952766}
-    - target: {fileID: 3792650375463056710, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
-      propertyPath: m_LocalPosition.x
+    - target: {fileID: 2793718619184936056, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3792650375463056710, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792650375463056710, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.13
       objectReference: {fileID: 0}
     - target: {fileID: 3792650375463056710, guid: c45e94c90a9e12546b18d5c0370782fe, type: 3}
       propertyPath: m_LocalPosition.z

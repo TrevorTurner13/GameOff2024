@@ -4,69 +4,134 @@ using UnityEngine;
 
 public class AIChase : MonoBehaviour
 {
+    [SerializeField] private float jumpForce = 2f;
+    [SerializeField] private float rayDistance;
     public EnemyController enemyController;
-
-    public EnemyDamage enemyDamage;
+    private Rigidbody2D rb;
+    private Animator animator;
+    private EnemyPatrol enemyPatrol;
 
     public GameObject player;
     public float chaseSpeed;
 
     private float distance;
-    public float distanceBetween;
+    public float chaseDistance;
 
-    public bool isChasing;
+    [SerializeField] private LayerMask groundMask;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        distance = Vector2.Distance(transform.position, player.transform.position);
-
-
-
-        if (distance < distanceBetween)
+        if (IsGrounded())
         {
-            isChasing = true;
-            Chase();
-            enemyController.currentState = EnemyController.aiStates.Chasing;
-
+            animator.SetBool("IsGrounded", true);
         }
-        if (distance > distanceBetween)
+        else
         {
-            isChasing = false;
-            enemyController.currentState = EnemyController.aiStates.Patrol;
-
-
+            animator.SetBool("IsGrounded", false);
         }
-        if (enemyDamage.isAttacking)
+        if (enemyController.currentState == EnemyController.aiStates.Chasing)
         {
-
-            isChasing = false;
-            enemyController.currentState = EnemyController.aiStates.Attacking;
-
+            if(CheckWall())
+            {  
+                Jump();
+            }
+            
+            if (CheckDistance())
+            {
+                animator.SetBool("IsRunning", true);
+                if (rb.velocity.x > 0 && !enemyPatrol.IsFacingRight)
+                {
+                    Flip();
+                }
+                else if (rb.velocity.x < 0 && enemyPatrol.IsFacingRight)
+                {
+                    Flip();
+                }
+                Chase();
+            }  
         }
     }
 
     public void Chase()
     {
-        if (isChasing && !enemyDamage.isAttacking)
-        {
-            if (transform.position.x > player.transform.position.x)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-                transform.position += Vector3.left * chaseSpeed * Time.deltaTime;
-            }
-            if (transform.position.x < player.transform.position.x)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-                transform.position += Vector3.right * chaseSpeed * Time.deltaTime;
-            }
+        Vector2 direction = player.transform.position - transform.position;
+        direction.Normalize();
+        rb.velocity = new Vector2(direction.x * chaseSpeed, rb.velocity.y);
+            
+    }
 
+    private void Flip()
+    {
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+        enemyPatrol.IsFacingRight = !enemyPatrol.IsFacingRight;
+    }
+
+    private void Jump()
+    {
+        if (IsGrounded())
+        {
+            animator.SetTrigger("IsJumping");
+            rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
+            Debug.Log("Jump!");
         }
+       
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics2D.BoxCast((Vector2)transform.position + (Vector2.down / 1.8f), new Vector2(0.5f, 0.05f), 0, -Vector2.up, 0.1f, groundMask);
+    }
+
+    public bool CheckWall()
+    {
+        RaycastHit2D hit;
+        if (!enemyPatrol.IsFacingRight)
+        {
+            hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), rayDistance, groundMask);
+        }
+        else
+        {
+            hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), rayDistance, groundMask);
+        }
+
+        if (hit)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckDistance()
+    {
+        distance = Vector2.Distance(transform.position, player.transform.position);
+        if (distance < chaseDistance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube((Vector2)transform.position + (Vector2.down / 1.8f), new Vector2(0.5f, 0.05f));
+         
     }
 }

@@ -11,11 +11,15 @@ public class EnemyHealth : MonoBehaviour
     public Animator animator;
 
     public EnemyController enemyController;
+    private CircleCollider2D col;
+    private Rigidbody2D rb;
 
     public bool isDead;
 
     private void Start()
     {
+        col = GetComponent<CircleCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
         //enemyPatrol = GetComponent<EnemyPatrol>();
     }
     // Method to apply damage to this object
@@ -34,16 +38,15 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        enemyController.currentState = EnemyController.aiStates.Death;
-        StartCoroutine(WaitForAnimation());
         isDead = true;
+        rb.bodyType = RigidbodyType2D.Static;
+        col.isTrigger = true;
+        StartCoroutine(WaitForAnimation());
     }
 
     IEnumerator WaitForAnimation()
     {
-
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
         Destroy(gameObject);
-
     }
 }

@@ -8,25 +8,24 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private AudioClip[] growlSFX;
     [SerializeField] private float growlCooldown;
 
-    public EnemyController enemyController;
-    public EnemyDamage enemyDamage;
-    public EnemyHealth enemyHealth;
+    private EnemyController enemyController;
+    private EnemyHealth enemyHealth;
 
     //public AIChase aiChase;
-    public GameObject pointA;
-    public GameObject pointB;
+    [SerializeField] private GameObject pointA;
+    [SerializeField] private GameObject pointB;
 
-    private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
 
-    public Animator animator;
+    [SerializeField] private Animator animator;
 
     private Transform currentPoint;
 
-    public float speed;
+    [SerializeField] private float speed;
 
-    public bool isIdle;
+    public bool IsIdle { get; private set; }
     //public bool isDead;
-    public bool isFacingRight;
+    public bool IsFacingRight;
 
     private float growlSFXCooldownTimer = Mathf.Infinity;
 
@@ -34,126 +33,96 @@ public class EnemyPatrol : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        enemyController = GetComponent<EnemyController>();
+        animator = GetComponentInChildren<Animator>();
+
         currentPoint = pointB.transform;
         animator.SetBool("IsRunning", true);
 
     }
 
-    private void flip()
+    private void Flip()
     {
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
-        isFacingRight = !isFacingRight;
+        IsFacingRight = !IsFacingRight;
     }
 
     // Update is called once per frame
     void Update()
     {
-        growlSFXCooldownTimer += Time.deltaTime;
-
-        if (!enemyDamage.isAttacking && !enemyHealth.isDead)
+        if (enemyController.currentState == EnemyController.aiStates.PatrolIdle)
         {
-            if (growlSFXCooldownTimer >= growlCooldown)
+            animator.SetBool("IsRunning", false);
+
+            rb.velocity = Vector2.zero;
+        }
+        else if (enemyController.currentState == EnemyController.aiStates.PatrolRunning)
+        {
+            animator.SetBool("IsRunning", true);
+            if (rb.velocity.x > 0 && !IsFacingRight)
             {
-                growlSFXCooldownTimer = 0;
-                SFXManager.instance.PlayRandomSFXClip(growlSFX, transform, 0.1f);
-
+                Flip();
             }
+            else if (rb.velocity.x < 0 && IsFacingRight)
+            {
+                Flip();
+            }
+            Patrol();
         }
-
-
-        if (!enemyHealth.isDead && !enemyDamage.isAttacking/* && !aiChase.isChasing*/)
+        growlSFXCooldownTimer += Time.deltaTime;
+        if (growlSFXCooldownTimer >= growlCooldown)
         {
-
-            enemyController.currentState = EnemyController.aiStates.Patrol;
-        }
-
-        if (rb.velocity.x > 0 && !isFacingRight)
-        {
-            flip();
-        }
-        else if (rb.velocity.x < 0 && isFacingRight)
-        {
-            flip();
-        }
+            growlSFXCooldownTimer = 0;
+            SFXManager.instance.PlayRandomSFXClip(growlSFX, transform, 0.1f);
+        } 
     }
+
 
     IEnumerator WaitIdle()
     {
-  
+        yield return new WaitForSeconds(2);
 
-        animator.SetBool("IsRunning", false);
+        if (currentPoint == pointA.transform)
+        {
+            currentPoint = pointB.transform;
+        }
+        else
+        {
+            currentPoint = pointA.transform;
+        }
 
-            rb.velocity = Vector2.zero;
-
-            isIdle = true;
-            
-
-            yield return new WaitForSeconds(2);
-
-            
-
-            if (currentPoint == pointA.transform)
-            {
-                currentPoint = pointB.transform;
-            }
-            else
-            {
-                currentPoint = pointA.transform;
-            }
-
-            animator.SetBool("IsRunning", true);
-
-            isIdle = false;
-
-
-
+        IsIdle = false;
     }
 
     public void Patrol()
     {
-        if (!enemyHealth.isDead && !enemyDamage.isAttacking)
+        if (!enemyHealth.isDead)
         {
-            if (!isIdle)
+            animator.SetBool("IsRunning", true);
+            Vector2 direction = currentPoint.position - transform.position;
+            direction.Normalize();
+            if (currentPoint == pointB.transform)
             {
-                animator.SetBool("IsRunning", true);
-
-
-                Vector2 point = currentPoint.position - transform.position;
-
-                if (currentPoint == pointB.transform)
-                {
-                    rb.velocity = new Vector2(speed, 0);
-                }
-                else if (currentPoint == pointA.transform)
-                {
-                    rb.velocity = new Vector2(-speed, 0);
-                }
-
-                if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
-                {
-                    StartCoroutine(WaitIdle());
-
-                }
-                if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
-                {
-                    StartCoroutine(WaitIdle());
-                }
+                rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
             }
-        
+            else if (currentPoint == pointA.transform)
+            {
+                rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
+            }
 
-
-
-
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+            {
+                IsIdle = true;
+                StartCoroutine(WaitIdle());
+            }
+            if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+            {
+                IsIdle = true;
+                StartCoroutine(WaitIdle());
+            }
         }
-
-
-    }
-
-    private void OnDisable()
-    {
-        animator.SetBool("IsRunning", false);
-
     }
 }
