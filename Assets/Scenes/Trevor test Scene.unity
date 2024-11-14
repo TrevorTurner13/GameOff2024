@@ -6873,6 +6873,7 @@ MonoBehaviour:
   enemyPatrol: {fileID: 1844990501}
   enemyAttackSFX: {fileID: 8300000, guid: 97ef30e8193490e4b91ec0809475b5fe, type: 3}
   isAttacking: 0
+  playerHealth: {fileID: 2130186735}
 --- !u!114 &1844990505
 MonoBehaviour:
   m_ObjectHideFlags: 0

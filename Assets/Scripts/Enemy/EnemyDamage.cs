@@ -28,6 +28,8 @@ public class EnemyDamage : MonoBehaviour
 
     private EnemyHealth enemyHealth;
 
+    public PlayerHealth playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,7 @@ public class EnemyDamage : MonoBehaviour
         cooldownTimer += Time.deltaTime;
         if (enemyController.currentState == EnemyController.aiStates.Attacking && !isAttacking)
         {
-            if (PlayerInRange() && cooldownTimer >= attackCooldown)
+            if (PlayerInRange() && cooldownTimer >= attackCooldown && !playerHealth.isDead)
             {
                 cooldownTimer = 0;
                 isAttacking = true;
