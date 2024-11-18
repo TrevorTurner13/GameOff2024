@@ -39,9 +39,9 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerHealth > 0)
         {
-            currentHealth -= 10;
             animator.SetTrigger("isHurt");
             SFXManager.instance.PlayRandomSFXClip(hurtSFX, transform, 0.1f);
+            currentHealth -= 10;
             healthBar.SetHealth(currentHealth);
         }
 
