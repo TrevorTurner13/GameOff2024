@@ -24,6 +24,7 @@ public class ItemUISlot : MonoBehaviour
         quantityText.text = itemQuantity.ToString();
         quantityText.enabled = true;
         itemImage.sprite = itemSprite;
+        itemImage.enabled = true;
     }
     // Start is called before the first frame update
     void Start()
