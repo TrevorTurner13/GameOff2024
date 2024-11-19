@@ -154,7 +154,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2066026111
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 1f0e375b215f767458e1fa4151d4b075, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 5606212784816581647}
   - component: {fileID: 261915726790625216}
   - component: {fileID: 7439305299471789757}
+  - component: {fileID: 8732074010369990074}
   - component: {fileID: 2418687701878520787}
   - component: {fileID: 7485682972859838663}
   - component: {fileID: 7208946776604286999}
@@ -452,7 +453,7 @@ MonoBehaviour:
   jumpSFX:
   - {fileID: 8300000, guid: d0afdd93753349940a0d5b65dd433934, type: 3}
   - {fileID: 8300000, guid: 1eff3a321456ac74fa2308c74f7b5e3e, type: 3}
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 7692800795751306421}
   dialogueTrigger: {fileID: 0}
 --- !u!114 &7439305299471789757
 MonoBehaviour:
@@ -474,8 +475,26 @@ MonoBehaviour:
   antiGravityMoveForce: 3
   antiGravityJumpForce: 5
   antiGravityScale: 0.5
-  antiGravityLinearDrag: 0.1
+  antiGravityLinearDrag: 0.08
   antiGravityAngularDrag: 0.05
+  fallGravity: 1.5
+  fallAntiGravity: 1
+  fallTimer: 0
+  fallDuration: 1
+--- !u!114 &8732074010369990074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6859003232146344396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926214d4b3976634aa5a831f77c6dcb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coyoteDuration: 0.25
+  lastOnGroundTime: 0
 --- !u!50 &2418687701878520787
 Rigidbody2D:
   serializedVersion: 4
@@ -573,6 +592,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c5a7d4d54d7315e4f87483182133e3b1, type: 3}
   - {fileID: 8300000, guid: beba940f6c74b724092099dc9750ab82, type: 3}
   - {fileID: 8300000, guid: 52d75722401721e4db8f087ae9fbe7b1, type: 3}
+  respawnPosition: {x: 0, y: 0, z: 0}
   currentHealth: 0
   animator: {fileID: 3972732544654671374}
   healthBar: {fileID: 0}
@@ -649,7 +669,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2066026111
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 8
   m_Sprite: {fileID: 967018593, guid: f9604a3b7f7213d44a687814e2c59a14, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
