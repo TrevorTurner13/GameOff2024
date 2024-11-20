@@ -26,15 +26,14 @@ public class ItemUISlot : MonoBehaviour
         itemImage.sprite = itemSprite;
         itemImage.enabled = true;
     }
-    // Start is called before the first frame update
-    void Start()
+    public void RemoveItem()
     {
-        
-    }
+        this.itemName = " ";
+        this.itemQuantity = 0;
+        this.itemSprite = null;
+        isFull = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        quantityText.enabled = false;
+        itemImage.enabled = false;
     }
 }

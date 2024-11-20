@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager instance;
+
     public ItemUISlot[] itemUISlot;
-    // Start is called before the first frame update
-    void Start()
+
+    //public Item item;
+
+    private void Awake()
     {
-        
+       if (instance != null && instance != this)
+       {
+            Destroy(this);
+       } 
+       else
+        {
+            instance = this;    
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void AddItem(string itemName, int itemQuantity, Sprite itemSprite)
@@ -24,8 +36,24 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemUISlot[i].isFull == false)
             {
+ 
+
                 itemUISlot[i].AddItem(itemName, itemQuantity, itemSprite);
                 return;
+
+
+            }
+        }
+    }
+
+    public void RemoveItem(string itemName)
+    {
+        for (int i = itemUISlot.Length -1; i > 0; i--)
+        {
+            if (itemUISlot[i].itemName == itemName)
+            {
+                itemUISlot[i].RemoveItem();
+                break;
             }
         }
     }

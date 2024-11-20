@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private string itemName;
+    public string itemName;
     [SerializeField] private int itemQuantity;
     [SerializeField] private Sprite itemSprite;
 
     private InventoryManager inventoryManager;
+
+    private PlayerInventory playerInventory;
 
     private void Start()
     {
@@ -20,8 +22,13 @@ public class Item : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            playerInventory = collision.gameObject.GetComponent<PlayerInventory>();
+            playerInventory.AddItem(this);
             inventoryManager.AddItem(itemName, itemQuantity, itemSprite);
-            Destroy(gameObject);
+
+            gameObject.SetActive(false);
+
+
         }
     }
 }

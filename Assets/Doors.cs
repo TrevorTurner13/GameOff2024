@@ -15,9 +15,9 @@ public class Doors : MonoBehaviour, IInteractable
 
     [SerializeField] private float duration;
     [SerializeField] private float timer;
+    [SerializeField] private bool isLocked;
 
     private bool isOpen;
-    private bool isLocked;
     private bool open;
     private bool close;
 
@@ -96,7 +96,18 @@ public class Doors : MonoBehaviour, IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            open = true;
+            if (!isLocked)
+            {
+                open = true;
+
+            }
+            else if(collision.GetComponent<PlayerInventory>().hasKeycard)
+            {
+                collision.GetComponent<PlayerInventory>().RemoveItem("Keycard");
+                InventoryManager.instance.RemoveItem("Keycard");
+                isLocked = false;
+                open = true;
+            }
         }
     }
 
@@ -104,7 +115,11 @@ public class Doors : MonoBehaviour, IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            close = true;
+            if (!isLocked)
+            {
+                close = true;
+            }
+
         }
     }
 }
