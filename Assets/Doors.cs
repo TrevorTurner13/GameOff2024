@@ -101,7 +101,7 @@ public class Doors : MonoBehaviour, IInteractable
                 open = true;
 
             }
-            else if(collision.GetComponent<PlayerInventory>().hasKeycard)
+            else if(collision.GetComponent<PlayerInventory>().CheckForKeycard())
             {
                 collision.GetComponent<PlayerInventory>().RemoveItem("Keycard");
                 InventoryManager.instance.RemoveItem("Keycard");

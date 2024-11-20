@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public bool isHealthPickup;
+    public bool healthPickedup;
+    public bool isKeycard;
     public string itemName;
     [SerializeField] private int itemQuantity;
     [SerializeField] private Sprite itemSprite;
@@ -27,7 +30,6 @@ public class Item : MonoBehaviour
             inventoryManager.AddItem(itemName, itemQuantity, itemSprite);
 
             gameObject.SetActive(false);
-
 
         }
     }

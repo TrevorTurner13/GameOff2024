@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int playerHealth;
+    public int maxHealth;
     [SerializeField] private AudioClip[] hurtSFX;
     [SerializeField] private Vector3 respawnPosition;
 
@@ -21,8 +21,8 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         respawnPosition = transform.position;
-        currentHealth = playerHealth;
-        healthBar.SetMaxHealth(playerHealth);
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage()
     {
-        if (playerHealth > 0)
+        if (currentHealth > 0)
         {
             animator.SetTrigger("isHurt");
             SFXManager.instance.PlayRandomSFXClip(hurtSFX, transform, 0.1f);
@@ -70,14 +70,15 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator WaitForDeath()
     {
-        currentHealth = playerHealth;
+        currentHealth = maxHealth;
 
         yield return new WaitForSeconds(3);
 
         animator.SetBool("isDead", false);
         isDead = false;
         transform.position = respawnPosition;
-        healthBar.SetMaxHealth(playerHealth);
+        healthBar.SetMaxHealth(maxHealth);
 
     }
+
 }

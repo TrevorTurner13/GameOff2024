@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public bool hasKeycard = false;
 
     public List<Item> items;
 
@@ -24,24 +23,36 @@ public class PlayerInventory : MonoBehaviour
     {
         items.Add(item);
 
-        if (item.itemName == "Keycard")
-        {
-            hasKeycard = true;
-        }
     }
 
     public void RemoveItem(string itemName)
     {
 
-        for (int i = items.Count - 1; i > 0; i--)
+        for (int i = items.Count - 1; i >= 0; i--)
         {
             if (items[i].itemName == itemName)
             {
                 items.Remove(items[i]);
-                hasKeycard = false;
 
                 break;
             }
         }
     }
+
+    public bool CheckForKeycard()
+    {
+        bool hasKeycard = false;
+
+        foreach (Item item in items)
+        {
+            if (item.isKeycard)
+            {
+                hasKeycard = true;
+                break;
+            }
+        }
+
+        return hasKeycard;
+    }
+
 }

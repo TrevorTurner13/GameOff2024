@@ -48,7 +48,7 @@ public class InventoryManager : MonoBehaviour
 
     public void RemoveItem(string itemName)
     {
-        for (int i = itemUISlot.Length -1; i > 0; i--)
+        for (int i = itemUISlot.Length -1; i >= 0; i--)
         {
             if (itemUISlot[i].itemName == itemName)
             {
