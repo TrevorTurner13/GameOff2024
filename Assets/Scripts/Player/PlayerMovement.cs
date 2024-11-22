@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     public DialogueTrigger dialogueTrigger;
 
+    public Canvas pauseMenu;
+
     private float horizontal;
     private float vertical;
     private float moveSpeed;
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsFacingRight { get; private set; }
 
+    public bool isPaused;
 
     private void Start()
     {
@@ -156,5 +159,25 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(0.2f, 0.05f));
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        Debug.Log("Pause Game");
+
+        if (!isPaused && context.performed)
+        {
+            pauseMenu.gameObject.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+
+        else if (isPaused && context.performed)
+        {
+            pauseMenu.gameObject.SetActive(false);
+            Time.timeScale = 1;
+            isPaused = false;
+
+        }
     }
 }
