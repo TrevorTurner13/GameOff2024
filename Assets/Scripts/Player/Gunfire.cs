@@ -23,7 +23,7 @@ public class Gunfire : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !PauseMenu.isPaused)
         {
             if (!dialogueTrigger.isTransmitting)
             {

@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsFacingRight { get; private set; }
 
-    public bool isPaused;
+    //public static bool isPaused;
 
     private void Start()
     {
@@ -165,18 +165,20 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("Pause Game");
 
-        if (!isPaused && context.performed)
+        if (!PauseMenu.isPaused && context.performed)
         {
             pauseMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
-            isPaused = true;
+            PauseMenu.isPaused = true;
+            AudioListener.pause = true;
         }
 
-        else if (isPaused && context.performed)
+        else if (PauseMenu.isPaused && context.performed)
         {
             pauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;
-            isPaused = false;
+            PauseMenu.isPaused = false;
+            AudioListener.pause = false;
 
         }
     }

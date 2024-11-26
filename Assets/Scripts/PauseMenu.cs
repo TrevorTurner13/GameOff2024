@@ -5,14 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    //public PlayerMovement playerMovement;
     public Canvas soundMenuCanvas;
+
+    public static bool isPaused;
+
 
     public void Resume()
     {
         Time.timeScale = 1;
         gameObject.SetActive(false);
-        playerMovement.isPaused = false;
+        isPaused = false;
+        AudioListener.pause = false;
     }
 
     public void OpenSoundSettings()
